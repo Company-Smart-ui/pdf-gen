@@ -1,23 +1,35 @@
-import logo from './logo.svg';
+
 import './App.css';
+import {useState} from "react";
+import jsPDF from "jspdf";
 
 function App() {
+  const [target , setTarget]= useState(100);
+  const [name , setName]= useState("");
+const pdfDownloader =()=>{
+    const doc = new jsPDF();
+    const text = `  business model for ${name}
+         
+         to earn ${target}$  you have to do that things ... 
+         
+         1)
+         2)
+         3)
+         `
+    doc.text(text, 10, 10);
+    doc.save("a4.pdf");
+}
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <h1>Buisnes plan Generator</h1>
+      <input value={name} onChange={(e)=>{setName(e.target.value)}}  placeholder={'enter your business name'} type="text"/>
+      <hr/>
+        <p>coose your target profit profit per month   </p>
+        <input value={target} onChange={(e)=>{setTarget(e.target.value)}} min={1000} max={10000} type="range"/> <span> {target}$</span>
+<hr/>
+        <button onClick={pdfDownloader} className="button"> generate plan</button>
+
     </div>
   );
 }
